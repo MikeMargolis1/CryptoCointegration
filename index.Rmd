@@ -4,18 +4,16 @@ author: "Mike Margolis"
 date: '`r format(Sys.Date(),"%B %d, %Y")` <br><br><br>'
 output:
   html_document:
-    code_folding: hide
     df_print: paged
+    code_folding: hide
+    toc: no
     fig_caption: yes
     theme: cerulean
-    toc: no
-    toc_depth: 4
     toc_float: no
-    
-    
+    pdf_document:
+      toc: no
 ---
-$~$
----
+
 
 ```{r setup, include = FALSE}
 rm(list=ls())
@@ -33,7 +31,7 @@ require(tidyquant)
 require(dplyr)
 require(tidyverse)
 require(knitr)
-require(reshape2)
+require(vingette)
 require(lubridate)
 require(timetk)
 require(kableExtra)
@@ -43,8 +41,6 @@ require(urca)
 require(tsDyn)
 require(apt)
 require(frequencyConnectedness)
-#require(openxlsx)
-#require(xlsx)
 require(readxl)
 ```
 
@@ -56,18 +52,17 @@ print(getwd())
 <br> <br> <br>
 
 <div align="center">
-
 ***
 # Crypto Cointergration:
 ## Testing for a Coupled Relationship in Cryptocurrencies
 ***
 ##### By: Mike Margolis
 
-<div align="left">
+<div align="Left">
 
 <br> <br> <br> <br> <br>
 
-
+<div align="Left">
 *** 
 ##### **Load in the Data**
 Read the data from Kagel Dataset and save the logs of the closing prices.
@@ -93,6 +88,7 @@ ETH <- ETH %>% dplyr::filter(Symbol == "ETH") %>% tk_xts(select = Close, date_va
 ##### **Initial look**
 Here we have the logged prices of Bitcoin (BTC), Ethereum (ETH), and Ripple (XRP)
 
+<div align="center">
 
 ```{r plotLogData}
 Coins1 <- cbind(log(BTC),log(ETH),log(XRP))
@@ -101,6 +97,7 @@ colnames(Coins1) <- c("lBTC","lETH","lXRP")
 plot(Coins1,col=c("blue","green", "red"), main="Log prices of BTC (blue),\n ETH (green) and XRP (red)")
 ```
 
+<div align="Left">
 
 ```{r}
 XRP1 <- read_xlsx("C:/Users/mikem/OneDrive/Desktop/Crypto RMD/ALT_coins.xlsx",sheet =5)
@@ -115,7 +112,9 @@ Coins <- subset(Coins, Date > "2018-02-02")
 
 ```
 
+<div align="Left">
 
+***
 ##### **Unit Root Testing**
 
 ```{r unitRoots}
@@ -158,6 +157,8 @@ The results are difficult to interpret. We find that BTC adjust the most, XRP th
 
 The IRFs seem to tell a different story--BTC is reluctant to adjust to shocks in ETH or XRP, and neither BTC nor ETH respond to shocks in XRP.
 
+<div align="center">
+
 ```{r irf1}
 irf1.coins <- irf(vecm1.out, n.ahead = 31)
 plot(irf1.coins)
@@ -167,6 +168,8 @@ plot(irf1.coins)
 plot(vars::fevd(vecm1.out, n.ahead = 52))
 ```
 
+<div align="Left">
+
 Let's try the case where there are two cointegrating vectors just to see what happens. The results are not wildly different so it is difficult to decide whether there should be 1 or 2 cointegrating vectors.
 
 ```{r estVECM2}
@@ -174,6 +177,7 @@ vecm2.out <- VECM(Coins1,2,r=2,include="const",estim="ML",LRinclude="none")
 summary(vecm2.out)
 ```
 
+<div align="center">
 
 ```{r irf2}
 irf2.coins <- irf(vecm2.out, n.ahead = 31)
@@ -184,10 +188,14 @@ plot(irf2.coins)
 plot(vars::fevd(vecm2.out, n.ahead = 52))
 ```
 
+<div align="Left">
 
 We can see from both Vector Error Decomposition Graphs that BTC rarelt budge and the variation in that coin is soley caused by it's own variation. On the other hand, ETH and XRP seem to both be affected by outside variation. For ETH over 60% of the variation in it's forecasted price will be due to BTC's variation in price. XRP is surprisingly affect less by BTC than ETH and the variation in XRP's forecasted price is due partially to its own variation and not BTC or ETH.
 
+<div align="Left">
+
 ***
+<div align="Left">
 
 ### Computing the Spill Over Index: How are the price and volatility of different coins connected?
 
@@ -279,11 +287,19 @@ tmp$selection %>%
   kableExtra::kable_styling() 
 ```
 
-###### Plot the logged values of all the coins
+***
+
+##### **Plot the logged values of all the coins**
+
+<div align="center">
 
 ```{r multi coin plot}
 plot(Crypto2)
 ```
+
+<div align="Left">
+<div align="Left">
+
 
 ##### KEY:
 
@@ -297,6 +313,9 @@ plot(Crypto2)
  - XLM (BLACK)
  - TRX (YELLOW")
 
+<div align="Left">
+
+<div align="center">
 
 ```{r multi coin VAR specification}
 p <- tmp$selection[2]
@@ -305,10 +324,10 @@ var.Crypto <- VAR(Crypto2, p=p, type="const")
 spilloverDY12(var.Crypto, n.ahead = 100, no.corr = FALSE) 
 ```
 
-
+<div align="Left">
 
 The across rows represent how much ones coins variation is shared with another coins variation. For example, 14% of the variation in ETH is due to the fluctuation in price of Bitcoin. The down columns show how much one coin's change in price causes volatility in the others. Bitcoin is a huge factor in other coins price changes. It seems to cause significant variation in all the other coins. The last cell of "To" and "From" shows how interconnected the entire variability in coin prices are. We find about 78% of variation in price for all of these coins are interconnected.
 
-
+***
 
 
