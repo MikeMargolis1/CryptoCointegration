@@ -65,8 +65,8 @@ print(getwd())
 <div align="Left">
 *** 
 ##### **Load in the Data**
-Read the data from Kagel Dataset and save the logs of the closing prices.
-The data for each of the coins used in this research can be downloaded here:[link](https://www.kaggle.com/datasets/kaushiksuresh147/top-10-cryptocurrencies-historical-dataset)
+We read in the data from a Kaggle dataset and use the closing prices for each coin.
+The data for each of the coins used in this research can be downloaded here [link](https://www.kaggle.com/datasets/kaushiksuresh147/top-10-cryptocurrencies-historical-dataset)
 
 
 ```{r}
