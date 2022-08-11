@@ -165,6 +165,9 @@ irf1.coins <- irf(vecm1.out, n.ahead = 31)
 plot(irf1.coins)
 ```
 
+
+These graphs demonstrate the Impulse Response Function associated with each of the coins. For all three graphs and all three coins we put each coin in their long run steady state. One at a time we take each coin and "ping" it, we push the coin one standard deviation above its steady state values. We then observe how the other coins move once the tested coin's steady state is broken. For Bitcoin we can see that each of the other two coins rise in price once Bitcoin rises. When Ethereum is "pinged" we see that Bitcoin does not move. XRP rises in price, however, not as much as it did when Bitcoin was pinged. When XRP is pinged Bitcoin and Ethereum actually decrese in price, slightly. It seems that When Bitcoin is "the drunk" ETH and XRP are "the puppies". When ETH is "the drunk", BTC is another drunk and XRP is puppy. When XRP is "the drunk", BTC and ETH are also drunks.
+
 ```{r fevd1}
 plot(vars::fevd(vecm1.out, n.ahead = 52))
 ```
@@ -191,7 +194,7 @@ plot(vars::fevd(vecm2.out, n.ahead = 52))
 
 <div align="Left">
 
-We can see from both Vector Error Decomposition Graphs that BTC rarelt budge and the variation in that coin is soley caused by it's own variation. On the other hand, ETH and XRP seem to both be affected by outside variation. For ETH over 60% of the variation in it's forecasted price will be due to BTC's variation in price. XRP is surprisingly affect less by BTC than ETH and the variation in XRP's forecasted price is due partially to its own variation and not BTC or ETH.
+We can see from both Impulse Response Function Graphs and Vector Error Decomposition Graphs that BTC barley budges and the variation in that coin is soley caused by it's own variation. On the other hand, ETH and XRP seem to both be affected by outside variation. For ETH over 60% of the variation in it's forecasted price will be due to BTC's variation in price. XRP is surprisingly affect less by BTC than ETH and the variation in XRP's forecasted price is due partially to its own variation and not BTC or ETH.
 
 <div align="Left">
 
