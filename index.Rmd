@@ -194,7 +194,7 @@ plot(vars::fevd(vecm2.out, n.ahead = 52))
 
 <div align="Left">
 
-We can see from both Impulse Response Function Graphs and Vector Error Decomposition Graphs that BTC barley budges and the variation in that coin is soley caused by it's own variation. On the other hand, ETH and XRP seem to both be affected by outside variation. For ETH over 60% of the variation in it's forecasted price will be due to BTC's variation in price. XRP is surprisingly affect less by BTC than ETH and the variation in XRP's forecasted price is due partially to its own variation and not BTC or ETH.
+We can see from both Impulse Response Function Graphs and Forecasted Error Variance Decomposition Graphs that BTC barley budges and the variation in that coin is soley caused by it's own variation. On the other hand, ETH and XRP seem to both be affected by outside variation. For ETH over 60% of the variation in it's forecasted price will be due to BTC's variation in price. XRP is surprisingly affect less by BTC than ETH and the variation in XRP's forecasted price is due partially to its own variation and not BTC or ETH.
 
 <div align="Left">
 
