@@ -1,1 +1,15 @@
 # CryptoCointegration
+
+In this project I looked to find if BTC, ETH, and XRP have a coupled relationship when it comes to their prices. The data used in this analysis is available through Kaggle and the link is provided in the HTML file above.
+
+I first observe the data on a graph and begin testing for stationarity in each variable. 
+
+I then determine how many cointegrating vectors I have. Since there are 3 variables, I cannot use the Stock-Watson approach which only tests for cointegration in pairs of variables. Instead, I will use the Johansen procedure. First, I determine the number of lags in the VAR in levels. Second, I use the ca.jo function from the urca package to determine the number of cointegrating vectors. There can be: 0 => no cointegration; 1 => there is a single vector so that some linear combination of all 3 coins is stationary; 2 => there are 2 independent linear combinations that are stationary. There cannot be 3 cointegrating vectors because that would mean that all 3 variables must be I(0) which we have already ruled out.
+
+The test results indicate a single cointegrating vector and 2 sources of non-stationary shocks. This seems a little odd, but I will go with it to see what I find.
+
+I then use Impulse Response Functions to display how each variable reacts to one other variable being shocked while they are all in their steady states. One at a time I take each coin and “ping” it, this pushes the coin one standard deviation above its steady state values. For Bitcoin we can see that each of the other two coins rise in price once Bitcoin rises. When Ethereum is “pinged” we see that Bitcoin does not move. XRP rises in price, however, not as much as it did when Bitcoin was pinged. When XRP is pinged Bitcoin and Ethereum decrease in price, slightly. It seems that When Bitcoin is “the drunk” ETH and XRP are “the puppies”. When ETH is “the drunk”, BTC is another drunk and XRP is puppy. When XRP is “the drunk”, BTC and ETH are also drunks. (The drunk and a puppy is a classic example/story of demonstrating a coupled relationship for two variables. Feel free to google the example if you are unfamiliar with the example/story).
+
+I then use Variance Decomposition of Forecast Errors for the VAR model to determine how much future variation in the price of one coin can be based on the past variation in price of all the other coins in the model. From the graphs we can observe that the variation in BTC's price is solely caused by its own variation. On the other hand, ETH and XRP seem to both be affected by outside variation. For ETH over 60% of the variation in its forecasted price will be due to BTC’s variation in price. XRP is surprisingly affect less by BTC than ETH and the variation in XRP’s forecasted price is due partially to its own variation and not BTC or ETH.
+
+I then used the same type of data for over 9 cryptocurrencies to compute a spillover index. This spillover index will compute the amount of variation each coin contributes to another coin's price and how interconnected the variation in prices for all coins are. I found that 78% of variation in the price for all these coins are interconnected.
